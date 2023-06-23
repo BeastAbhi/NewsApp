@@ -28,7 +28,7 @@ export class News extends Component {
     }
     async updateNews(){
       this.props.setProgress(10);
-      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&sortBy=publishedAt&category=${this.props.category}&apiKey=${this.state.page}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&sortBy=publishedAt&category=${this.props.category}&apiKey=${this.state.page}  &page=${this.state.page}&pageSize=${this.props.pageSize}`;
       this.setState({loading: true})
       // let data = await fetch(url);
       // let parsedData = await data.json()
@@ -61,8 +61,9 @@ export class News extends Component {
   //  }
 
           fetchMoreData = async () =>{
+              
+              const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&sortBy=publishedAt&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
               this.setState({page: this.state.page + 1})
-              const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&sortBy=publishedAt&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
               fetch(url).then((res) => res.json())
                       .then((json) => {
                           this.setState({
@@ -76,7 +77,7 @@ export class News extends Component {
   render() {
     return (
       <div className='container my-3 bg-dark'>
-        <h1 className="text-conter">News24/7 - Top {this.props.category} Headlines</h1>
+        <h1 className="text-conter" style={{marginTop: "90px"}}>News24/7 - Top {this.props.category} Headlines</h1>
         {this.state.loading && <Spinner/>}
             <InfiniteScroll
       dataLength={this.state.articles.length}
